@@ -4,7 +4,7 @@ import com.daa.bench.BenchmarkRunner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("DAA Assignment 1: Divide and Conquer Execution Engine");
+        System.out.println("Starting Divide and Conquer Benchmarks...");
         BenchmarkRunner.runAllBenchmarks();
     }
 }

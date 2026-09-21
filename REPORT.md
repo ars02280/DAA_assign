@@ -4,10 +4,10 @@
 
 | Algorithm | Best Case | Average Case | Worst Case | Operational Reason |
 | :--- | :--- | :--- | :--- | :--- |
-| **MergeSort** | $\Theta(n \log n)$ | $\Theta(n \log n)$ | $\Theta(n \log n)$ | Division always produces equal halves regardless of element order. |
-| **QuickSort** | $\Omega(n)$ | $\Theta(n \log n)$ | $O(n \log n)$ | Best: 3-way partition on equal elements; Worst: bounded recursion guarantees stack depth. |
-| **QuickSelect** | $\Omega(n)$ | $\Theta(n)$ | $O(n)$ | Random pivot guarantees $O(n)$ expected split on a single subproblem. |
-| **Insertion Sort** | $\Omega(n)$ | $\Theta(n^2)$ | $O(n^2)$ | Best: sorted input requires 0 swaps; Worst: reversed array requires max swaps. |
+| **MergeSort** | $\Theta(n \log n)$ | $\Theta(n \log n)$ | $\Theta(n \log n)$ | Array is always partitioned into halves regardless of ordering. |
+| **QuickSort** | $\Omega(n)$ | $\Theta(n \log n)$ | $O(n \log n)$ | Best: 3-way partition handles duplicates linearly; Worst: bounded depth caps recursion. |
+| **QuickSelect** | $\Omega(n)$ | $\Theta(n)$ | $O(n)$ | Random pivot guarantees $O(n)$ expected split on single target subproblem. |
+| **Insertion Sort** | $\Omega(n)$ | $\Theta(n^2)$ | $O(n^2)$ | Best: presorted array needs 0 swaps; Worst: reversed array needs max swaps. |
 
 ---
 
@@ -24,7 +24,7 @@
 - **Master Theorem Parameters:** $a = 2$, $b = 2$, $f(n) = \Theta(n)$
 - **Case:** Case 2 ($f(n) = \Theta(n^{\log_b a})$)
 - **Solution:** $T(n) = \Theta(n \log n)$
-- **Explanation:** Random pivot selection avoids bad splits ($O(n^2)$) on presorted arrays, guaranteeing a balanced expected split ($25/75$ or better) with high probability and yielding an average time complexity of $O(n \log n)$.
+- **Explanation:** Random pivot selection avoids worst-case splits on sorted inputs, maintaining an expected balanced partition ($25/75$ or better) with high probability, yielding $O(n \log n)$ average time.
 
 ### QuickSelect (Balanced Split Assumption)
 - **Recurrence Relation:** $T(n) = 1T(n/2) + \Theta(n)$
@@ -34,16 +34,20 @@
 
 ---
 
-## 3. Empirical Analysis & Numeric Tables
+## 3. Empirical Analysis & Visualizations
 
-To evaluate asymptotic growth without external plotting tools, comparison counts $C(n)$ were measured against theoretical growth $g(n)$ directly within Java.
+### Visual Plot Deliverables
+- **Execution Time vs Size:** ![Time vs N](plots/time_vs_n.png)
+- **Recursion Depth vs Size:** ![Depth vs N](plots/depth_vs_n.png)
+- **Comparison Ratio vs Size:** ![Ratio vs N](plots/ratio_vs_n.png)
 
-### Ratio Table: MergeSort (random)
+### Ratio Convergence Check ($\Theta$-bound Verification)
+
+#### MergeSort (random)
 ```text
-=== RATIO TABLE: MergeSort (random) ===
 N          | Comparisons     | Theoretical Growth   | Ratio     
 ------------------------------------------------------------------
-1000       | 11200           | 9965.78              | 1.1238    
-10000      | 134000          | 132877.12            | 1.0085    
-100000     | 1560000         | 1660964.04           | 0.9392    
-1000000    | 17800000        | 19931568.57          | 0.8931
+1000       | 16203           | 9965.78              | 1.6259    
+10000      | 227055          | 132877.12            | 1.7088    
+100000     | 2939804         | 1660964.04           | 1.7700    
+1000000    | 36158426        | 19931568.57          | 1.8141

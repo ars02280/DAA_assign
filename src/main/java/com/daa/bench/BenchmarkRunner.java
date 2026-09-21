@@ -1,12 +1,5 @@
 package com.daa.bench;
 
-
-
-
-
-
-
-
 import com.daa.algorithms.MergeSort;
 import com.daa.algorithms.QuickSort;
 import com.daa.algorithms.QuickSelect;
@@ -28,29 +21,20 @@ public class BenchmarkRunner {
         try (PrintWriter writer = new PrintWriter(new FileWriter("results.csv"))) {
             writer.println("algorithm,input,n,time_ms,comparisons,max_depth");
 
-            System.out.println("Starting Benchmark Runs...");
-
             for (String type : TYPES) {
                 for (String alg : new String[]{"MergeSort", "QuickSort", "QuickSelect"}) {
-                    long[] comparisonsForTable = new long[SIZES.length];
-
-                    for (int i = 0; i < SIZES.length; i++) {
-                        int n = SIZES[i];
-                        long[] result = executeBenchmarkRun(alg, n, type, metrics, writer);
-                        comparisonsForTable[i] = result[1]; // Index 1 is comparisons
+                    for (int n : SIZES) {
+                        executeBenchmarkRun(alg, n, type, metrics, writer);
                     }
-
-                    // Print numerical ratio table directly to console
-                    ConsolePlotter.printRatioTable(alg, type, SIZES, comparisonsForTable);
                 }
             }
-            System.out.println("\nBenchmark finished successfully. Results exported to results.csv");
+            System.out.println("Benchmark finished. Results saved to results.csv");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static long[] executeBenchmarkRun(String alg, int n, String type, Metrics metrics, PrintWriter writer) {
+    private static void executeBenchmarkRun(String alg, int n, String type, Metrics metrics, PrintWriter writer) {
         long[] times = new long[RUNS];
         long[] comparisons = new long[RUNS];
         int[] depths = new int[RUNS];
@@ -80,8 +64,6 @@ public class BenchmarkRunner {
 
         int median = RUNS / 2;
         writer.printf("%s,%s,%d,%d,%d,%d%n", alg, type, n, times[median], comparisons[median], depths[median]);
-
-        return new long[]{times[median], comparisons[median], depths[median]};
     }
 
     private static int[] generateData(int n, String type) {
