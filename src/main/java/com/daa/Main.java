@@ -1,6 +1,6 @@
 package com.daa;
 
-import com.daa.benchmark.BenchmarkRunner;
+import com.daa.bench.BenchmarkRunner;
 
 public class Main {
     public static void main(String[] args) {

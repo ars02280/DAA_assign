@@ -1,5 +1,13 @@
 package com.daa.bench;
 
+
+
+
+
+
+
+
+import com.daa.algorithms.MergeSort;
 import com.daa.algorithms.QuickSort;
 import com.daa.algorithms.QuickSelect;
 import com.daa.metrics.Metrics;
