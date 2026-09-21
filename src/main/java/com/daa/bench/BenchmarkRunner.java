@@ -1,4 +1,4 @@
-package com.daa.bench;
+package com.daa.benchmark;
 
 import com.daa.algorithms.MergeSort;
 import com.daa.algorithms.QuickSort;
@@ -6,7 +6,6 @@ import com.daa.algorithms.QuickSelect;
 import com.daa.metrics.Metrics;
 
 import java.io.FileWriter;
-
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Random;
@@ -16,25 +15,35 @@ public class BenchmarkRunner {
     private static final String[] TYPES = {"random", "sorted", "duplicates"};
     private static final int RUNS = 5;
 
-    public static void main(String[] args) {
+    public static void runAllBenchmarks() {
         Metrics metrics = new Metrics();
 
         try (PrintWriter writer = new PrintWriter(new FileWriter("results.csv"))) {
             writer.println("algorithm,input,n,time_ms,comparisons,max_depth");
 
-            for (int n : SIZES) {
-                for (String type : TYPES) {
-                    runBenchmark("MergeSort", n, type, metrics, writer);
-                    runBenchmark("QuickSort", n, type, metrics, writer);
-                    runBenchmark("QuickSelect", n, type, metrics, writer);
+            System.out.println("Starting Benchmark Runs...");
+
+            for (String type : TYPES) {
+                for (String alg : new String[]{"MergeSort", "QuickSort", "QuickSelect"}) {
+                    long[] comparisonsForTable = new long[SIZES.length];
+
+                    for (int i = 0; i < SIZES.length; i++) {
+                        int n = SIZES[i];
+                        long[] result = executeBenchmarkRun(alg, n, type, metrics, writer);
+                        comparisonsForTable[i] = result[1]; // Index 1 is comparisons
+                    }
+
+                    // Print numerical ratio table directly to console
+                    ConsolePlotter.printRatioTable(alg, type, SIZES, comparisonsForTable);
                 }
             }
+            System.out.println("\nBenchmark finished successfully. Results exported to results.csv");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void runBenchmark(String alg, int n, String type, Metrics metrics, PrintWriter writer) {
+    private static long[] executeBenchmarkRun(String alg, int n, String type, Metrics metrics, PrintWriter writer) {
         long[] times = new long[RUNS];
         long[] comparisons = new long[RUNS];
         int[] depths = new int[RUNS];
@@ -64,6 +73,8 @@ public class BenchmarkRunner {
 
         int median = RUNS / 2;
         writer.printf("%s,%s,%d,%d,%d,%d%n", alg, type, n, times[median], comparisons[median], depths[median]);
+
+        return new long[]{times[median], comparisons[median], depths[median]};
     }
 
     private static int[] generateData(int n, String type) {
