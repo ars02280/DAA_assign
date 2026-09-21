@@ -36,10 +36,16 @@
 
 ## 3. Empirical Analysis & Visualizations
 
-### Visual Plot Deliverables
-- **Execution Time vs Size:** ![Time vs N](plots/time_vs_n.png)
-- **Recursion Depth vs Size:** ![Depth vs N](plots/depth_vs_n.png)
-- **Comparison Ratio vs Size:** ![Ratio vs N](plots/ratio_vs_n.png)
+### Performance Visualizations (All Input Types Included)
+
+#### 1. Execution Time vs Array Size
+![Execution Time vs Size](plots/time_vs_n.png)
+
+#### 2. Max Recursion Depth vs Array Size (Edge Cases & Duplicates)
+![Max Recursion Depth vs Size](plots/depth_vs_n.png)
+
+#### 3. Comparison Ratio vs Array Size (Convergence Check)
+![Comparison Ratio vs Size](plots/ratio_vs_n.png)
 
 ### Ratio Convergence Check ($\Theta$-bound Verification)
 

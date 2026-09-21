@@ -1,5 +1,6 @@
 package com.daa;
 
+import com.daa.algorithms.MergeSort;
 import com.daa.metrics.Metrics;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
