@@ -1,4 +1,4 @@
-package com.daa.benchmark;
+package com.daa.bench;
 
 import com.daa.algorithms.QuickSort;
 import com.daa.algorithms.QuickSelect;
